@@ -1,9 +1,91 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PickyG - Court de Tennis</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>PickyG - Tennis Academy Academy in Helsinki</title>
+  <meta name="description" content="PickyG is your professional tennis coach and tennis academy in Helsinki, offering lessons for all levels. Discover classes, prices, and events." />
+  <meta name="keywords" content="tennis coach Helsinki, tennis academy Helsinki, tennis lessons Helsinki, tennis school Helsinki, tennis Helsinki, coach tennis Finland" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="Coach Tennis Helsinki - PickyG" />
+  <meta property="og:description" content="Your tennis coach and tennis academy in Helsinki. Lessons, events, pricing and more." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pickyg.fi/" />
+  <meta property="og:image" content="https://lectaris.github.io/PickyG/pickyg-logo.jpg" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Coach Tennis Helsinki - PickyG" />
+  <meta name="twitter:description" content="Learn tennis with PickyG Tennis Academy in Helsinki. Lessons for all levels available." />
+  <meta name="twitter:image" content="https://lectaris.github.io/PickyG/pickyg-logo.jpg" />
+
+  <!-- Schema.org structured data in JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SportsClub",
+  "name": "PickyG Tennis Academy Helsinki",
+  "url": "https://pickyg.fi/",
+  "description": "Professional tennis coaching and tennis academy for all levels in Helsinki, Finland.",
+  "telephone": "+358 40 324 5951",
+  "email": "pickyGbenissan@gmail.com",
+  "image": "https://lectaris.github.io/PickyG/pickyg-logo.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Helsinki",
+    "addressCountry": "FI"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "opens": "08:00",
+      "closes": "22:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Sunday",
+      "opens": "09:00",
+      "closes": "19:00"
+    }
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service, Georges Kouassi Benissan",
+    "email": "pickyGbenissan@gmail.com",
+    "telephone": "+358 40 324 5951",
+    "availableLanguage": ["English", "Finnish", "Swedish"]
+  }
+  "sameAs": [
+  "https://pickyg.fi",
+  "https://www.facebook.com/share/17pz74A8ky/",
+  "https://www.instagram.com/iamgeobenis",
+  "https://www.linkedin.com/in/georges-kouassi-benissan-89457144/"
+
+  ],
+  "priceRange": "50-100EUR/hour",
+  "paymentAccepted": ["Cash", "Credit Card", "Mobile Payment"],
+  "areaServed": {
+    "@type": "Place",
+    "address": {
+      "addressLocality": ["Helsinki", "Espoo", "Vantaa"],
+      "addressCountry": "FI"
+    }
+  },
+  "logo": "https://lectaris.github.io/PickyG/pickyg-logo.jpg",
+  "foundingDate": "1996"
+  }
+</script>
+
   <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
@@ -12,6 +94,20 @@
         margin: 0;
         padding: 0;
         overflow: hidden;
+    }
+    footer {
+      width: 100vw;
+      text-align: center;
+      color: #ffffff7b;
+      font-size: 0.6vw;
+      letter-spacing: 0.04em;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 999;
+      pointer-events: none;
+      font-family: 'Lobster', cursive, Arial, sans-serif;
+      user-select: none;
     }
     body {
         min-height: 100vh;
@@ -37,7 +133,7 @@
       margin-top:-1.5vw;
       font-family:'Lobster',cursive;
       font-size:1.5vw;
-      margin-bottom: 3vw;
+      margin-bottom: 9vw;
       color: #fff;
       letter-spacing:0.09em;
       font-weight: 400;
@@ -58,7 +154,7 @@
         background: #0d94dd;
         border-radius: 0;
         box-shadow: 0 4px 24px rgba(0,0,0,0.12);
-        border: 5px solid #fff;
+        border: px solid #fff;
         margin: 0 auto;
     }
     @media (max-width: 700px) {
@@ -78,17 +174,12 @@
     .service-box { top: 25%; bottom: 25%; width: 3px; }
     .service-box.left { left: 25%; }
     .service-box.right { right: 25%; }
-    .side-mark { width: 12px; height: 3px; background: #fff; position: absolute; }
-    .side-mark.left { left: 0; top: 25%; }
-    .side-mark.right { right: 0; top: 25%; }
+    .side-mark { width: 16px; height: 3px; background: #fff; position: absolute; }
+    .side-mark.left { left: 0; top: 50%; }
+    .side-mark.right { right: 0; top: 50%; }
     .side-mark.left-bottom { left: 0; bottom: 25%; }
     .side-mark.right-bottom { right: 0; bottom: 25%; }
     .center-horizontal { position: absolute; height: 3px; background: #fff; left: 25%; right: 25%; top: 50%; transform: translateY(-50%); z-index: 2; }
-    .baseline-mark { position: absolute; width: 12px; height: 4px; background: #fff; z-index: 3; }
-    .baseline-mark.top-left { top: -2px; left: calc(25% - 6px); }
-    .baseline-mark.top-right { top: -2px; right: calc(25% - 6px); }
-    .baseline-mark.bottom-left { bottom: -2px; left: calc(25% - 6px); }
-    .baseline-mark.bottom-right { bottom: -2px; right: calc(25% - 6px); }
     /* Boutons interactifs */
     .court-btn {
       position: absolute;
@@ -192,13 +283,37 @@
     .popup .close:hover { color: #0472aa; }
     .popup ul { padding-left: 1.03em; margin-bottom:0.6em;}
     .popup strong { color:#0d94dd; }
+    /* Filet central vertical */
+    .net {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 0;
+      height: 100%;
+      border-left: 0;
+      transform: translateX(-50%);
+      z-index: 4;
+      pointer-events: none;
+    }
+    .net::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0;
+      border-left: 5px dotted rgba(255,255,255,0.7);
+    }
+    }
   </style>
 </head>
 <body>
-  <img src="pickyg.png" alt="Logo PickyG" class="logo" />
-  <div class="tagline">
-    Global Generation
-  </div>
+  <header>
+    <img src="logo/pickyg.png" alt="Logo PickyG" class="logo" />
+    <div class="tagline">
+      Tennis Academy
+    </div>
+  </header>
   <div class="court-container">
     <div class="tennis-court">
       <!-- Lignes extérieures -->
@@ -279,6 +394,8 @@
       <div class="baseline-mark top-right"></div>
       <div class="baseline-mark bottom-left"></div>
       <div class="baseline-mark bottom-right"></div>
+      <!-- Filet -->
+      <div class="line net"></div>
     </div>
   </div>
 
@@ -363,5 +480,10 @@
     });
   </script>
 </body>
+  <footer style="width:100vw;text-align:center;padding:1.2em 0 1em 0;background:transparent;color:#fff;font-size:1.1em;letter-spacing:0.04em;position:fixed;bottom:0;left:0;z-index:999;pointer-events:none;">
+    &copy; <span id="year"></span> PickyG. All rights reserved.
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </footer>
 </html>
-
