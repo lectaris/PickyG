@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PickyG - Court de Tennis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    body {
+        min-height: 100vh;
+        background: #0d94dd;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+    .logo {
+        width: 22vw;
+        max-width: 420px;
+        min-width: 160px;
+        margin-bottom: 0.1vw;
+        margin-top: 0.3vw;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .tagline {
+      text-align:center;
+      margin-top:-1.5vw;
+      font-family:'Lobster',cursive;
+      font-size:1.5vw;
+      margin-bottom: 3vw;
+      color: #fff;
+      letter-spacing:0.09em;
+      font-weight: 400;
+      text-shadow: 0 2px 10px #0472aa88, 0 0px 2px #fff;
+    }
+    .court-container {
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .tennis-court {
+        position: relative;
+        width: 90vw;
+        max-width: 1200px;
+        aspect-ratio: 2.9/1.3;
+        background: #0d94dd;
+        border-radius: 0;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+        border: 5px solid #fff;
+        margin: 0 auto;
+    }
+    @media (max-width: 700px) {
+        .tennis-court { aspect-ratio: 2/1.9; }
+        .tagline { font-size:1.23rem; margin-top:-7px; }
+    }
+    .line { position: absolute; background: #fff; }
+    .baseline { left: 0; right: 0; height: 5px; }
+    .baseline.top { top: 0; }
+    .baseline.bottom { bottom: 0; }
+    .sideline { top: 0; bottom: 0; width: 5px; }
+    .sideline.left { left: 0; }
+    .sideline.right { right: 0; }
+    .service-line { left: 0; right: 0; height: 3px; }
+    .service-line.top { top: 25%; }
+    .service-line.bottom { bottom: 25%; }
+    .service-box { top: 25%; bottom: 25%; width: 3px; }
+    .service-box.left { left: 25%; }
+    .service-box.right { right: 25%; }
+    .side-mark { width: 12px; height: 3px; background: #fff; position: absolute; }
+    .side-mark.left { left: 0; top: 25%; }
+    .side-mark.right { right: 0; top: 25%; }
+    .side-mark.left-bottom { left: 0; bottom: 25%; }
+    .side-mark.right-bottom { right: 0; bottom: 25%; }
+    .center-horizontal { position: absolute; height: 3px; background: #fff; left: 25%; right: 25%; top: 50%; transform: translateY(-50%); z-index: 2; }
+    .baseline-mark { position: absolute; width: 12px; height: 4px; background: #fff; z-index: 3; }
+    .baseline-mark.top-left { top: -2px; left: calc(25% - 6px); }
+    .baseline-mark.top-right { top: -2px; right: calc(25% - 6px); }
+    .baseline-mark.bottom-left { bottom: -2px; left: calc(25% - 6px); }
+    .baseline-mark.bottom-right { bottom: -2px; right: calc(25% - 6px); }
+    /* Boutons interactifs */
+    .court-btn {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #0d94dd;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #0002;
+      width: 4.4vw;
+      min-width: 60px;
+      aspect-ratio: 1/1;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      transition: transform 0.22s cubic-bezier(.45,1.36,.54,1.01), box-shadow 0.14s, background 0.14s;
+      z-index: 5;
+    }
+    .court-btn:hover, .court-btn:focus {
+      background: #0472aa;
+      box-shadow: 0 0 28px #33c2ff66;
+      transform: translateY(-5px) scale(1.09) rotate(-2deg);
+    }
+    .court-btn .fa-solid {
+      font-size: 2vw;
+      color: #fff;
+      background: transparent;
+      transition: color 0.14s;
+    }
+    .court-label {
+      opacity: 0;
+      transform: translateY(15px) scale(0.95);
+      pointer-events: none;
+      font-size: 1vw;
+      color: #fff;
+      background: #222a;
+      margin-top: 0.38em;
+      border-radius: 12px;
+      padding: 0.37em 1em 0.31em 1em;
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      transform: translate(-50%, 10px) scale(0.93);
+      white-space: nowrap;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+      transition: opacity 0.25s cubic-bezier(.59,1.23,.23,1), transform 0.23s cubic-bezier(.59,1.23,.23,1);
+      box-shadow: 0 0 8px #0d94dd99;
+      z-index: 15;
+      pointer-events: none;
+    }
+    .court-btn:hover .court-label,
+    .court-btn:focus .court-label {
+      opacity: 1;
+      transform: translate(-50%, 0px) scale(1);
+      pointer-events: auto;
+    }
+    @media (max-width: 700px) {
+      .court-btn { width: 46px; min-width: 46px; }
+      .court-btn .fa-solid { font-size: 1.1rem; }
+      .court-label { font-size: 0.8rem; padding: 0.25em 0.6em; }
+    }
+    /* Pop-up styles */
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%) scale(1);
+      background: #fff;
+      color: #222;
+      border-radius: 22px;
+      box-shadow: 0 12px 40px #0d94dd77;
+      z-index: 1100;
+      min-width: 320px;
+      max-width: 95vw;
+      width: 420px;
+      padding: 2.1rem 1.6rem 1.3rem 1.6rem;
+      font-family: 'Lobster', cursive;
+      font-size: 1.09rem;
+      display: none;
+      animation: popupIn 0.28s cubic-bezier(.76,1.36,.23,1.18);
+    }
+    @keyframes popupIn {
+      from { opacity: 0; transform:translate(-50%,-55%) scale(0.88);}
+      to   { opacity: 1; transform:translate(-50%,-50%) scale(1);}
+    }
+    .popup.visible { display: block; }
+    .popup h2 { margin-top:0; font-family:sans-serif; color:#0d94dd; font-size:1.33rem;}
+    .popup .close {
+      position: absolute;
+      top: 0.76rem;
+      right: 1.3rem;
+      background: none;
+      border: none;
+      font-size: 1.9rem;
+      color: #0d94dd;
+      cursor: pointer;
+      transition: color 0.18s;
+    }
+    .popup .close:hover { color: #0472aa; }
+    .popup ul { padding-left: 1.03em; margin-bottom:0.6em;}
+    .popup strong { color:#0d94dd; }
+  </style>
+</head>
+<body>
+  <img src="logo/pickyg.png" alt="Logo PickyG" class="logo" />
+  <div class="tagline">
+    Global Generation
+  </div>
+  <div class="court-container">
+    <div class="tennis-court">
+      <!-- Lignes extérieures -->
+      <div class="line baseline top"></div>
+      <div class="line baseline bottom"></div>
+      <div class="line sideline left"></div>
+      <div class="line sideline right"></div>
+      <!-- Buttons/interactifs -->
+      <button class="court-btn" title="Mini-Kids Price"
+        style="top:12.5%;left:12.5%;transform:translate(-50%,-50%);"
+        onclick="showPopup('mini')">
+        <i class="fa-solid fa-child"></i>
+        <span class="court-label">Mini-Kids Price</span>
+      </button>
+      <button class="court-btn" title="About PickyG"
+        style="top:12.5%;left:50%;transform:translate(-50%,-50%);"
+        onclick="location.href='/about-pickyg'">
+        <i class="fa-solid fa-user"></i>
+        <span class="court-label">About PickyG</span>
+      </button>
+      <button class="court-btn" title="Juniors Price"
+        style="top:12.5%;left:87.5%;transform:translate(-50%,-50%);"
+        onclick="showPopup('junior')">
+        <i class="fa-solid fa-users"></i>
+        <span class="court-label">Juniors Price</span>
+      </button>
+      <button class="court-btn" title="Events"
+        style="top:50%;left:12.5%;transform:translate(-50%,-50%);"
+        onclick="location.href='/events'">
+        <i class="fa-solid fa-calendar-days"></i>
+        <span class="court-label">Events</span>
+      </button>
+      <button class="court-btn" title="Services"
+        style="top:50%;left:87.5%;transform:translate(-50%,-50%);"
+        onclick="location.href='/services'">
+        <i class="fa-solid fa-gear"></i>
+        <span class="court-label">Services</span>
+      </button>
+      <button class="court-btn" title="Adult Price"
+        style="top:87.5%;left:12.5%;transform:translate(-50%,-50%);"
+        onclick="showPopup('adult')">
+        <i class="fa-solid fa-person"></i>
+        <span class="court-label">Adult Price</span>
+      </button>
+      <button class="court-btn" title="Book your session"
+        style="top:87.5%;left:50%;transform:translate(-50%,-50%);"
+        onclick="window.open('https://calendly.com/your-slug', '_blank')">
+        <i class="fa-solid fa-calendar-check"></i>
+        <span class="court-label">Book your session</span>
+      </button>
+      <button class="court-btn" title="Gallery"
+        style="top:50%;left:50%;transform:translate(-50%,-50%);"
+        onclick="location.href='/gallery'">
+        <i class="fa-solid fa-images"></i>
+        <span class="court-label">Gallery</span>
+      </button>
+      <button class="court-btn" title="Seniors Price"
+        style="top:87.5%;left:87.5%;transform:translate(-50%,-50%);"
+        onclick="showPopup('senior')">
+        <i class="fa-solid fa-person-cane"></i>
+        <span class="court-label">Seniors Price</span>
+      </button>
+      <!-- Lignes de service horizontales -->
+      <div class="line service-line top"></div>
+      <div class="line service-line bottom"></div>
+      <!-- Lignes de service verticales -->
+      <div class="line service-box left"></div>
+      <div class="line service-box right"></div>
+      <!-- Marques latérales -->
+      <div class="side-mark left"></div>
+      <div class="side-mark right"></div>
+      <div class="side-mark left-bottom"></div>
+      <div class="side-mark right-bottom"></div>
+      <!-- Ligne horizontale centrale -->
+      <div class="line center-horizontal"></div>
+      <!-- Tirets sur les lignes horizontales des extrémités -->
+      <div class="baseline-mark top-left"></div>
+      <div class="baseline-mark top-right"></div>
+      <div class="baseline-mark bottom-left"></div>
+      <div class="baseline-mark bottom-right"></div>
+    </div>
+  </div>
+
+  <!-- POPUPS -->
+  <div class="popup" id="pop-mini">
+    <button class="close" onclick="closePopup()">&times;</button>
+    <h2>Mini-Kids Price</h2>
+    <strong>PickyG Mini-Kids Program</strong>
+    <p>Designed for children aged 4 to 7, our Mini-Kids sessions focus on fun, movement, and learning tennis basics through playful activities.</p>
+    <ul>
+      <li>Age range: 4–7</li>
+      <li>Group size: max 6 kids</li>
+      <li>Session duration: 45 minutes</li>
+      <li>Price: €12 per child</li>
+      <li>Equipment provided</li>
+    </ul>
+    <p>Our priority is joy, safety, and the first steps towards healthy habits!</p>
+  </div>
+
+  <div class="popup" id="pop-junior">
+    <button class="close" onclick="closePopup()">&times;</button>
+    <h2>Juniors Price</h2>
+    <strong>Juniors Tennis Lessons</strong>
+    <p>Perfect for players aged 8 to 14, junior sessions mix fun with technique and teamwork.</p>
+    <ul>
+      <li>Age range: 8–14</li>
+      <li>Session duration: 60 minutes</li>
+      <li>Price: €18 per player</li>
+      <li>Small group format for individual attention</li>
+      <li>Progress tracking for every child</li>
+    </ul>
+    <p>Build your skills and confidence in a supportive, energetic environment!</p>
+  </div>
+
+  <div class="popup" id="pop-adult">
+    <button class="close" onclick="closePopup()">&times;</button>
+    <h2>Adult Price</h2>
+    <strong>Adult Tennis Training</strong>
+    <p>Open to all levels, our adult classes offer dynamic workouts, individual technique advice, and lots of social fun.</p>
+    <ul>
+      <li>From beginners to advanced</li>
+      <li>Session duration: 75 minutes</li>
+      <li>Price: €22 per person</li>
+      <li>Private or group lessons available</li>
+      <li>Equipment and rackets can be borrowed</li>
+    </ul>
+    <p>Join us for fitness, enjoyment, and the best tennis atmosphere in the city!</p>
+  </div>
+
+  <div class="popup" id="pop-senior">
+    <button class="close" onclick="closePopup()">&times;</button>
+    <h2>Seniors Price</h2>
+    <strong>Seniors Club Sessions</strong>
+    <p>Our senior program reflects our belief that tennis is for everyone, at any age.</p>
+    <ul>
+      <li>Age: 55+</li>
+      <li>Session duration: 60 minutes</li>
+      <li>Price: €13 per participant</li>
+      <li>Gentle pace, focus on movement and safety</li>
+      <li>Social coffee to follow every session</li>
+    </ul>
+    <p>Experience the joy of moving and reconnecting—every week!</p>
+  </div>
+
+  <script>
+    function showPopup(which) {
+      closePopup();
+      var pop = document.getElementById('pop-' + which);
+      if(pop) pop.classList.add('visible');
+    }
+    function closePopup() {
+      document.querySelectorAll('.popup.visible').forEach(function(e){ e.classList.remove('visible'); });
+    }
+    // Fermer le popup avec Esc
+    document.addEventListener('keydown', function(e){
+      if(e.key==='Escape') closePopup();
+    });
+    // Fermer popup au click hors popup
+    document.addEventListener('click', function(e){
+      var pop = document.querySelector('.popup.visible');
+      if(pop && !pop.contains(e.target) && !e.target.classList.contains('court-btn')) closePopup();
+    });
+  </script>
+</body>
+</html>
