@@ -90,20 +90,79 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: #0d94dd;
+      box-sizing: border-box;
     }
-    footer {
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
       width: 100vw;
-      text-align: center;
-      color: #ffffff7b;
-      font-size: 0.6vw;
-      letter-spacing: 0.04em;
-      position: fixed;
-      bottom: 0;
-      left: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    .court-container {
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1 0 auto;
+      margin-bottom: 25vw;
+    }
+    header {
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 1vw;
+      flex-shrink: 0;
+    }
+    @media (max-width: 700px) {
+      body {
+        min-height: 100vh;
+        height: auto;
+        justify-content: flex-start;
+        overflow-y: auto;
+      }
+      .court-container {
+        width: 100vw;
+        min-height: 0;
+        flex: 1 0 auto;
+        margin-bottom: 18vw;
+      }
+      .tennis-court {
+        width: 98vw;
+        max-width: 100vw;
+        aspect-ratio: 2/2.2;
+        min-width: 0;
+        margin: 0 auto;
+      }
+      header {
+        width: 100vw;
+        margin-bottom: 2vw;
+      }
+      .logo {
+        width: 38vw;
+        min-width: 90px;
+        max-width: 180px;
+      }
+      .tagline {
+        font-size: 1.1rem;
+        margin-top: -7px;
+        margin-bottom: 2vw;
+      }
+      footer {
+        font-size: 0.95em;
+        padding: 0.7em 0 0.7em 0;
+      }
+    }
       z-index: 999;
       pointer-events: none;
       font-family: 'Lobster', cursive, Arial, sans-serif;
@@ -153,7 +212,7 @@
         aspect-ratio: 2.9/1.3;
         background: #0d94dd;
         border-radius: 0;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+          margin-bottom: 18vw;
         border: px solid #fff;
         margin: 0 auto;
     }
@@ -309,7 +368,7 @@
 </head>
 <body>
   <header>
-    <img src="logo/pickyg.png" alt="Logo PickyG" class="logo" />
+    <img src="pickyg.png" alt="Logo PickyG" class="logo" />
     <div class="tagline">
       Tennis Academy
     </div>
@@ -487,4 +546,3 @@
     </script>
   </footer>
 </html>
-
